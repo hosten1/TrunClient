@@ -1,2 +1,4 @@
 # TrunClient
 测试 Allocate 消息获取relay地址
+
+#HMAC 地址：https://github.com/Akagi201/hmac-sha1
