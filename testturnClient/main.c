@@ -1,5 +1,8 @@
 // (c) joric 2010, public domain
 
+
+//#define KUserOpenSSL
+
 #ifdef _WIN32
 #include <winsock2.h>
 #include <windows.h>
@@ -13,8 +16,13 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#ifdef KUserOpenSSL
 #include "openssl/md5.h"
 #include "openssl/hmac.h"
+#else
+#include "md5.h"
+#include "HMAC/hmac.h"
+#endif
 #define SOCKET int
 #define THREAD pthread_t
 #endif
@@ -393,7 +401,11 @@ void turnWriteFooter(turnMessage * m, int write_integrity)
     {
         int len = 20;
         unsigned char hash[20];
+#ifdef KUserOpenSSL
         HMAC(EVP_sha1(), turnKey, 16, (unsigned char *) m->data, m->length - 24, hash, &len);
+#else
+        hmac_sha1(turnKey,16,(char *) m->data, m->length - 24, hash, &len);
+#endif
         m->ofs = m->length - 24;
         w16(m, turnAttrMessageIntegrity);
         w16(m, len);
@@ -698,10 +710,14 @@ void turnMakeMD5Key(char *key, char *user, char *realm, char *pass)
     char buf[256] = { 0 };
     sprintf(buf, "%s:%s:%s", user, realm, pass);
 //lym:lymggylove.top:123456
+#ifdef KUserOpenSSL
     MD5_CTX ctx;
     MD5_Init(&ctx);
     MD5_Update(&ctx, buf, strlen(buf));
     MD5_Final(key, &ctx);
+#else
+    md5((uint8_t*)buf, strlen(buf), key);
+#endif
 }
 
 void turnCreateThread(turnAddress * a)

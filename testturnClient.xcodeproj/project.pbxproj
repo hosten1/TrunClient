@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B04D34C2885074E009F9591 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 1B04D34A2885074E009F9591 /* md5.c */; };
+		1B04D35028851394009F9591 /* hmac_sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 1B04D34E28851394009F9591 /* hmac_sha1.c */; };
+		1B04D3532885139D009F9591 /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 1B04D3512885139D009F9591 /* sha1.c */; };
 		1BB70388282E2B870062EDBA /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 1BB70387282E2B870062EDBA /* main.c */; };
-		1BCC3358282BCA0800EEDE5B /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BCC3357282BC9F700EEDE5B /* libcrypto.a */; };
-		1BCC3359282BCA0800EEDE5B /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BCC3356282BC9F700EEDE5B /* libssl.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,10 +26,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1B04D34A2885074E009F9591 /* md5.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = md5.c; sourceTree = "<group>"; };
+		1B04D34B2885074E009F9591 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = HMAC/LICENSE; sourceTree = "<group>"; };
+		1B04D34D2885081F009F9591 /* md5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
+		1B04D34E28851394009F9591 /* hmac_sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hmac_sha1.c; sourceTree = "<group>"; };
+		1B04D34F28851394009F9591 /* hmac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hmac.h; sourceTree = "<group>"; };
+		1B04D3512885139D009F9591 /* sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sha1.c; sourceTree = "<group>"; };
+		1B04D3522885139D009F9591 /* sha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha.h; sourceTree = "<group>"; };
 		1BB70387282E2B870062EDBA /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		1BCC3349282BC6EC00EEDE5B /* testturnClient */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testturnClient; sourceTree = BUILT_PRODUCTS_DIR; };
-		1BCC3356282BC9F700EEDE5B /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = frameworks/libssl.a; sourceTree = "<group>"; };
-		1BCC3357282BC9F700EEDE5B /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = frameworks/libcrypto.a; sourceTree = "<group>"; };
 		1BCC335A282BCA7B00EEDE5B /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
 		1BCC335B282BCA8700EEDE5B /* libc++.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.1.tbd"; path = "usr/lib/libc++.1.tbd"; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -38,17 +44,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1BCC3359282BCA0800EEDE5B /* libssl.a in Frameworks */,
-				1BCC3358282BCA0800EEDE5B /* libcrypto.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B04D33A2885056C009F9591 /* HMAC */ = {
+			isa = PBXGroup;
+			children = (
+				1B04D34A2885074E009F9591 /* md5.c */,
+				1B04D34D2885081F009F9591 /* md5.h */,
+				1B04D34E28851394009F9591 /* hmac_sha1.c */,
+				1B04D34F28851394009F9591 /* hmac.h */,
+				1B04D3522885139D009F9591 /* sha.h */,
+				1B04D3512885139D009F9591 /* sha1.c */,
+			);
+			name = HMAC;
+			path = testturnClient/HMAC;
+			sourceTree = "<group>";
+		};
 		1BCC3340282BC6EB00EEDE5B = {
 			isa = PBXGroup;
 			children = (
+				1B04D33A2885056C009F9591 /* HMAC */,
 				1BCC334B282BC6EC00EEDE5B /* testturnClient */,
 				1BCC334A282BC6EC00EEDE5B /* Products */,
 				1BCC3353282BC93F00EEDE5B /* Frameworks */,
@@ -66,6 +85,7 @@
 		1BCC334B282BC6EC00EEDE5B /* testturnClient */ = {
 			isa = PBXGroup;
 			children = (
+				1B04D34B2885074E009F9591 /* LICENSE */,
 				1BB70387282E2B870062EDBA /* main.c */,
 			);
 			path = testturnClient;
@@ -76,8 +96,6 @@
 			children = (
 				1BCC335B282BCA8700EEDE5B /* libc++.1.tbd */,
 				1BCC335A282BCA7B00EEDE5B /* libstdc++.6.0.9.tbd */,
-				1BCC3357282BC9F700EEDE5B /* libcrypto.a */,
-				1BCC3356282BC9F700EEDE5B /* libssl.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -139,7 +157,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B04D3532885139D009F9591 /* sha1.c in Sources */,
+				1B04D34C2885074E009F9591 /* md5.c in Sources */,
 				1BB70388282E2B870062EDBA /* main.c in Sources */,
+				1B04D35028851394009F9591 /* hmac_sha1.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
