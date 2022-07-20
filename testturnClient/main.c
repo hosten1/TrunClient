@@ -42,7 +42,7 @@ char *turnHost = "www.lymggylove.top";
 char *turnUser = "lym";
 char *turnRealm = "123456";
 int turnMagicCookie = 0x2112A442;
-char turnKey[16];
+unsigned char turnKey[16];
 char turnError[256] = { 0 };
 char turnNonce[256] = { 0 };
 char turnRealmStr [256] = { 0 };
@@ -77,11 +77,11 @@ typedef struct
     int type;
     int length;
     int magic;
-    char *tsx_id;
-    char *nonce;
+    uint8_t *tsx_id;
+    uint8_t *nonce;
     int errorcode;
-    char *errormsg;
-    char data[turnBufferSize];
+    uint8_t *errormsg;
+    uint8_t data[turnBufferSize];
     int ofs;
 } turnMessage;
 
@@ -266,7 +266,7 @@ int turnRead(turnMessage * m)
 #define r32(m) ((r16(m) << 16) | r16(m))
 #define rData(m, buf, len) {int i= 0; for (i = 0; i < len; i++) buf[i] = r8(m);}
 
-void turnHexDump(char *buf, int len)
+void turnHexDump(uint8_t *buf, int len)
 {
     int i;
     printf("\"");
@@ -276,7 +276,7 @@ void turnHexDump(char *buf, int len)
     printf("\"");
 }
 
-void turnStrDump(char *buf, int len)
+void turnStrDump(uint8_t *buf, int len)
 {
     int i;
     printf("\"");
@@ -395,17 +395,22 @@ void turnWriteFooter(turnMessage * m, int write_integrity)
         m->length += 24;
 
     m->ofs = 2;
-    w16(m, m->length - turnHeaderSize);
+    w16(m, (m->length - turnHeaderSize));
 
     if (write_integrity)
     {
-        int len = 20;
+        size_t len = 20;
         unsigned char hash[20];
 #ifdef KUserOpenSSL
         HMAC(EVP_sha1(), turnKey, 16, (unsigned char *) m->data, m->length - 24, hash, &len);
 #else
-        hmac_sha1(turnKey,16,(char *) m->data, m->length - 24, hash, &len);
+        hmac_sha1(turnKey,16,m->data, m->length - 24, (uint8_t *)hash, &len);
 #endif
+        printf("hmac_sha1:\n");
+        for (int idx = 0; idx < len; idx++) {
+               printf("%02x",(unsigned char)hash[idx]);
+        }
+        printf("\n");
         m->ofs = m->length - 24;
         w16(m, turnAttrMessageIntegrity);
         w16(m, len);
@@ -547,7 +552,7 @@ void turnParseMessage(turnMessage * m)
                 sprintf(turnError, "%d [%s]", m->errorcode, m->errormsg);
 
                 if (turnDebug)
-                    printf(turnError);
+                    printf("%s",turnError);
 
                 break;
             case turnAttrCodeErrorResp:{
@@ -598,17 +603,17 @@ void turnParseMessage(turnMessage * m)
     
 }
 
-void turnSend(turnAddress * a, char *data, int datalen)
+void turnSend(turnAddress * a, uint8_t *data, int datalen)
 {
     printf("[send %d bytes]\n", datalen);
     send(turnServer.sock, data, datalen, 0);
 }
 
-void turnRecv(turnAddress * a, char *data, int datalen)
+void turnRecv(turnAddress * a, uint8_t *data, long datalen)
 {
     turnSleep(100);
 
-    printf("[recv %d bytes]\n", datalen);
+    printf("[recv %ld bytes]\n", datalen);
 
     if (datalen < 0)
         return;
@@ -627,7 +632,7 @@ void turnRecv(turnAddress * a, char *data, int datalen)
     }
 }
 
-int turnOpenNetwork()
+int turnOpenNetwork(void)
 {
 #ifdef WIN32
     WSADATA wsa;
@@ -639,7 +644,7 @@ int turnOpenNetwork()
 #endif
 }
 
-int turnCloseNetwork()
+int turnCloseNetwork(void)
 {
 #ifdef WIN32
     WSACleanup();
@@ -652,7 +657,7 @@ static void *turnThread(void *param)
 {
     turnAddress *a = (turnAddress *) param;
 
-    char buffer[turnBufferSize];
+    uint8_t buffer[turnBufferSize];
     long res = 0;
     struct sockaddr_in addr;
 
@@ -684,7 +689,7 @@ error:
     return NULL;
 }
 
-void turnStatus()
+void turnStatus(void)
 {
     printf("+====================================================================+\n");
     printf("|             CLIENT                |             PEER               |\n");
@@ -705,10 +710,10 @@ void turnStatus()
     printf("turn>");
 }
 
-void turnMakeMD5Key(char *key, char *user, char *realm, char *pass)
+void turnMakeMD5Key(uint8_t *key, uint8_t *user, uint8_t *realm, uint8_t *pass)
 {
-    char buf[256] = { 0 };
-    sprintf(buf, "%s:%s:%s", user, realm, pass);
+    uint8_t buf[256] = { 0 };
+    sprintf((char*)buf, "%s:%s:%s", user, realm, pass);
 //lym:lymggylove.top:123456
 #ifdef KUserOpenSSL
     MD5_CTX ctx;
@@ -718,6 +723,7 @@ void turnMakeMD5Key(char *key, char *user, char *realm, char *pass)
 #else
     md5((uint8_t*)buf, strlen(buf), key);
 #endif
+    printf("计算值:%s\n",buf);
 }
 
 void turnCreateThread(turnAddress * a)
@@ -771,11 +777,15 @@ int main(int argc, char **argv)
     a->server = 0;
     turnCreateThread(a);
 
-    char *password = "123456";
+    uint8_t *password = "123456";
 //    "̩\xeb\xabH.V\xca\U00000018\U0000000f\xb6\xc8xK\x87\xc9\xe0"
     //client may use precalculated turnKey (you may get rid of md5 code as well)
     turnMakeMD5Key(turnKey, turnUser, turnRealm, password);
-
+    printf("turnKey:\n");
+    for (int idx = 0; idx < 16; idx++) {
+           printf("%02x",(unsigned char)turnKey[idx]);
+    }
+    printf("\n");
     int action = 0;
 
     while (1)
