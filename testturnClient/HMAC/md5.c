@@ -8,7 +8,7 @@
 #include <string.h>
 #include <stdint.h>
  
-#include "md5.h"
+#include "md5in.h"
 // Constants are the integer part of the sines of integers (in radians) * 2^32.
 const uint32_t k[64] = {
 0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee ,

@@ -20,7 +20,7 @@
 #include "openssl/md5.h"
 #include "openssl/hmac.h"
 #else
-#include "md5.h"
+#include "md5in.h"
 #include "HMAC/hmac.h"
 #endif
 #define SOCKET int
@@ -400,11 +400,11 @@ void turnWriteFooter(turnMessage * m, int write_integrity)
     if (write_integrity)
     {
         size_t len = 20;
-        unsigned char hash[20];
+        uint8_t hash[20];
 #ifdef KUserOpenSSL
         HMAC(EVP_sha1(), turnKey, 16, (unsigned char *) m->data, m->length - 24, hash, &len);
 #else
-        hmac_sha1(turnKey,16,m->data, m->length - 24, (uint8_t *)hash, &len);
+        hmac_sha1(turnKey,16,m->data, m->length - 24, hash, &len);
 #endif
         printf("hmac_sha1:\n");
         for (int idx = 0; idx < len; idx++) {

@@ -18,7 +18,7 @@
 
 #include "hmac.h"
 
-
+#include <stdio.h>
 /** SHA-1 Block size */
 #ifndef SHA_BLOCKSIZE
 #define SHA_BLOCKSIZE   (64)
@@ -47,6 +47,16 @@ void hmac_sha1(const uint8_t *k,  /* secret key */
 		ERR_clear_error();
 	}
 #else
+    uint8_t cache[76] = {0};
+    memcpy(cache, d, ld);
+    
+    printf("\n 需要加密的数据:\n");
+    for (int idx = 0; idx < ld; idx++) {
+//           printf("%02x",d[idx]);
+        printf("\'%c\'",d[idx]);
+//        printf_bin_8(d[idx]);
+    }
+    printf("\n");
     SHA_CTX ictx, octx;
     uint8_t isha[SHA_DIGEST_LENGTH], osha[SHA_DIGEST_LENGTH];
     uint8_t key[SHA_DIGEST_LENGTH];
@@ -104,3 +114,50 @@ void hmac_sha1(const uint8_t *k,  /* secret key */
     memcpy(out, osha, *t);
 #endif
 }
+
+#define BLOCK_SIZE SHA_BLOCKSIZE
+
+void hmac1_sha1(const char *text, size_t text_len, const char *key, size_t key_len, void *digest) {
+    uint8_t cache[76] = {0};
+    memcpy(cache, text, text_len);
+    
+    printf("\n需要加密的数据:\n");
+    for (int idx = 0; idx < text_len; idx++) {
+//           printf("%02x",d[idx]);
+        printf("\'%c\'",text[idx]);
+//        printf_bin_8(d[idx]);
+    }
+    printf("\n");
+    unsigned char k_ipad[BLOCK_SIZE+1];
+    unsigned char k_opad[BLOCK_SIZE+1];
+    unsigned char tk[SHA1HashSize];
+    if(key_len > BLOCK_SIZE) {
+        SHA1Context ctx;
+        SHA1Reset(&ctx);
+        SHA1Input(&ctx, key, key_len);
+        SHA1Result(&ctx, tk);
+        key_len = SHA1HashSize;
+        key = tk;
+    }
+    bzero(k_ipad, sizeof(k_ipad));
+    bzero(k_opad, sizeof(k_opad));
+    bcopy(key, k_ipad, key_len);
+    bcopy(key, k_opad, key_len);
+    for(int i=0; i<BLOCK_SIZE; i++) {
+        k_ipad[i] ^= 0x36;
+        k_opad[i] ^= 0x5c;
+    }
+    SHA1Context context;
+    // inner
+    SHA1Reset(&context);
+    SHA1Input(&context, k_ipad, BLOCK_SIZE);
+    SHA1Input(&context, text, text_len);
+    SHA1Result(&context, digest);
+    // outer
+    SHA1Reset(&context);
+    SHA1Input(&context, k_opad, BLOCK_SIZE);
+    SHA1Input(&context, digest, SHA1HashSize);
+    SHA1Result(&context, digest);
+    return;
+}
+

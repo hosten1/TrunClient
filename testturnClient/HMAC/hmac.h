@@ -16,4 +16,9 @@ void hmac_sha1(const uint8_t *k,   /* secret key */
         uint8_t *out, /* output buffer, at least "t" bytes */
         size_t *t);
 
+#define MD5HashSize 16
+
+// redis sha1: http://download.redis.io/redis-stable/src/sha1.c
+
+void hmac1_sha1(const char *text, size_t text_len, const char *key, size_t key_len, void *digest);
 #endif // HMAC_H_

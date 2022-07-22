@@ -8,9 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		1B04D34C2885074E009F9591 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 1B04D34A2885074E009F9591 /* md5.c */; };
-		1B04D35028851394009F9591 /* hmac_sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 1B04D34E28851394009F9591 /* hmac_sha1.c */; };
 		1B04D3532885139D009F9591 /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 1B04D3512885139D009F9591 /* sha1.c */; };
+		1B2BD0912888102400DA9BEA /* hmac_sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 1B2BD0902888102400DA9BEA /* hmac_sha1.c */; };
 		1BB70388282E2B870062EDBA /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 1BB70387282E2B870062EDBA /* main.c */; };
+		1BFEE464288A6B5C00D9CD5B /* md5_one.c in Sources */ = {isa = PBXBuildFile; fileRef = 1BFEE460288A6B5C00D9CD5B /* md5_one.c */; };
+		1BFEE465288A6B5C00D9CD5B /* md5_dgst.c in Sources */ = {isa = PBXBuildFile; fileRef = 1BFEE461288A6B5C00D9CD5B /* md5_dgst.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,15 +30,21 @@
 /* Begin PBXFileReference section */
 		1B04D34A2885074E009F9591 /* md5.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = md5.c; sourceTree = "<group>"; };
 		1B04D34B2885074E009F9591 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = HMAC/LICENSE; sourceTree = "<group>"; };
-		1B04D34D2885081F009F9591 /* md5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
-		1B04D34E28851394009F9591 /* hmac_sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hmac_sha1.c; sourceTree = "<group>"; };
+		1B04D34D2885081F009F9591 /* md5in.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = md5in.h; sourceTree = "<group>"; };
 		1B04D34F28851394009F9591 /* hmac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hmac.h; sourceTree = "<group>"; };
 		1B04D3512885139D009F9591 /* sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sha1.c; sourceTree = "<group>"; };
-		1B04D3522885139D009F9591 /* sha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha.h; sourceTree = "<group>"; };
+		1B2BD08F28880FF900DA9BEA /* sha1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha1.h; sourceTree = "<group>"; };
+		1B2BD0902888102400DA9BEA /* hmac_sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hmac_sha1.c; sourceTree = "<group>"; };
 		1BB70387282E2B870062EDBA /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		1BCC3349282BC6EC00EEDE5B /* testturnClient */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testturnClient; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BCC335A282BCA7B00EEDE5B /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
 		1BCC335B282BCA8700EEDE5B /* libc++.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.1.tbd"; path = "usr/lib/libc++.1.tbd"; sourceTree = SDKROOT; };
+		1BFEE460288A6B5C00D9CD5B /* md5_one.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = md5_one.c; sourceTree = "<group>"; };
+		1BFEE461288A6B5C00D9CD5B /* md5_dgst.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = md5_dgst.c; sourceTree = "<group>"; };
+		1BFEE462288A6B5C00D9CD5B /* md5_local.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5_local.h; sourceTree = "<group>"; };
+		1BFEE468288A6B7C00D9CD5B /* md32_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md32_common.h; sourceTree = "<group>"; };
+		1BFEE469288A6B7C00D9CD5B /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
+		1BFEE46A288A6C5F00D9CD5B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,12 +61,13 @@
 		1B04D33A2885056C009F9591 /* HMAC */ = {
 			isa = PBXGroup;
 			children = (
-				1B04D34A2885074E009F9591 /* md5.c */,
-				1B04D34D2885081F009F9591 /* md5.h */,
-				1B04D34E28851394009F9591 /* hmac_sha1.c */,
+				1BFEE45F288A6B5B00D9CD5B /* MD5 */,
+				1B2BD0902888102400DA9BEA /* hmac_sha1.c */,
 				1B04D34F28851394009F9591 /* hmac.h */,
-				1B04D3522885139D009F9591 /* sha.h */,
+				1B04D34A2885074E009F9591 /* md5.c */,
+				1B04D34D2885081F009F9591 /* md5in.h */,
 				1B04D3512885139D009F9591 /* sha1.c */,
+				1B2BD08F28880FF900DA9BEA /* sha1.h */,
 			);
 			name = HMAC;
 			path = testturnClient/HMAC;
@@ -67,6 +76,7 @@
 		1BCC3340282BC6EB00EEDE5B = {
 			isa = PBXGroup;
 			children = (
+				1BFEE46A288A6C5F00D9CD5B /* README.md */,
 				1B04D33A2885056C009F9591 /* HMAC */,
 				1BCC334B282BC6EC00EEDE5B /* testturnClient */,
 				1BCC334A282BC6EC00EEDE5B /* Products */,
@@ -98,6 +108,26 @@
 				1BCC335A282BCA7B00EEDE5B /* libstdc++.6.0.9.tbd */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1BFEE45F288A6B5B00D9CD5B /* MD5 */ = {
+			isa = PBXGroup;
+			children = (
+				1BFEE467288A6B7C00D9CD5B /* include */,
+				1BFEE460288A6B5C00D9CD5B /* md5_one.c */,
+				1BFEE461288A6B5C00D9CD5B /* md5_dgst.c */,
+				1BFEE462288A6B5C00D9CD5B /* md5_local.h */,
+			);
+			path = MD5;
+			sourceTree = "<group>";
+		};
+		1BFEE467288A6B7C00D9CD5B /* include */ = {
+			isa = PBXGroup;
+			children = (
+				1BFEE468288A6B7C00D9CD5B /* md32_common.h */,
+				1BFEE469288A6B7C00D9CD5B /* md5.h */,
+			);
+			path = include;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,10 +187,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BFEE464288A6B5C00D9CD5B /* md5_one.c in Sources */,
 				1B04D3532885139D009F9591 /* sha1.c in Sources */,
+				1B2BD0912888102400DA9BEA /* hmac_sha1.c in Sources */,
 				1B04D34C2885074E009F9591 /* md5.c in Sources */,
+				1BFEE465288A6B5C00D9CD5B /* md5_dgst.c in Sources */,
 				1BB70388282E2B870062EDBA /* main.c in Sources */,
-				1B04D35028851394009F9591 /* hmac_sha1.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
